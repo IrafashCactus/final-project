@@ -1,0 +1,41 @@
+{
+  "math": {
+    "title": "Mathematics",
+    "icon": "🧮",
+    "description": "Master algebra, geometry, and calculus",
+    "quizzes": [
+      {
+        "id": "algebra-1",
+        "question": "Solve for x: 2x + 5 = 15",
+        "options": ["x = 5", "x = 10", "x = 7.5"],
+        "answer": 0,
+        "explanation": "Subtract 5 from both sides: 2x = 10, then divide by 2"
+      },
+      {
+        "id": "geometry-1",
+        "question": "What's the area of a circle with radius 3?",
+        "options": ["6π", "9π", "12π"],
+        "answer": 1,
+        "explanation": "Area = πr² = π(3)² = 9π"
+      }
+    ]
+  },
+  "english": {
+    "title": "English",
+    "icon": "📖",
+    "description": "Improve grammar and literature skills",
+    "quizzes": [
+      {
+        "id": "grammar-1",
+        "question": "Which sentence is correct?",
+        "options": [
+          "She don't like apples",
+          "She doesn't likes apples",
+          "She doesn't like apples"
+        ],
+        "answer": 2,
+        "explanation": "Third-person singular requires 'doesn't' + base verb"
+      }
+    ]
+  }
+}

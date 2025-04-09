@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudySmart - AI-Powered Learning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+  <style>
+    .chat-message { max-width: 80%; }
+    @media (max-width: 768px) {
+      .chat-message { max-width: 90%; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Navbar -->
+  <header class="bg-green-700 text-white shadow">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold">StudySmart</h1>
+      <div id="auth-status" class="space-x-4">
+        <button id="login-btn" class="hover:underline">Login</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App -->
+  <div class="container mx-auto px-4 py-8">
+    <!-- AI Tutor -->
+    <section id="ai-tutor" class="mb-12 bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold mb-4">AI Tutor</h2>
+      <div id="chat-container" class="mb-4 space-y-3 max-h-96 overflow-y-auto">
+        <div class="chat-message bg-green-100 p-3 rounded-lg">
+          <p>Hello! I'm your StudySmart tutor. Ask me anything about math, science, or English.</p>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <input id="user-input" type="text" placeholder="Ask a question..." 
+               class="flex-1 p-3 border rounded-lg focus:ring-2 focus:ring-green-500">
+        <button id="send-btn" class="bg-green-700 text-white px-4 py-3 rounded-lg hover:bg-green-800">
+          Send
+        </button>
+      </div>
+    </section>
+
+    <!-- Subjects -->
+    <section id="subjects" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <!-- Filled by JavaScript -->
+    </section>
+
+    <!-- Login Modal -->
+    <div id="auth-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg max-w-md w-full">
+          <h3 class="text-xl font-bold mb-4" id="auth-modal-title">Login</h3>
+          
+          <!-- Tabs -->
+          <div class="flex border-b mb-4">
+            <button id="login-tab" class="px-4 py-2 font-medium border-b-2 border-green-700">Login</button>
+            <button id="signup-tab" class="px-4 py-2 font-medium text-gray-500">Sign Up</button>
+          </div>
+      
+          <!-- Login Form -->
+          <div id="login-form">
+            <input type="email" id="login-email" placeholder="Email" class="w-full p-3 border rounded-lg mb-2">
+            <input type="password" id="login-password" placeholder="Password" class="w-full p-3 border rounded-lg">
+            <button id="email-login-btn" class="w-full bg-green-700 text-white p-3 rounded-lg mt-4 hover:bg-green-800">
+              Login
+            </button>
+            <button id="forgot-password" class="text-sm text-gray-600 mt-2 hover:underline">
+              Forgot password?
+            </button>
+          </div>
+      
+          <!-- Signup Form -->
+          <div id="signup-form" class="hidden">
+            <input type="email" id="signup-email" placeholder="Email" class="w-full p-3 border rounded-lg mb-2">
+            <input type="password" id="signup-password" placeholder="Password (min 6 chars)" class="w-full p-3 border rounded-lg">
+            <button id="email-signup-btn" class="w-full bg-green-700 text-white p-3 rounded-lg mt-4 hover:bg-green-800">
+              Create Account
+            </button>
+          </div>
+      
+          <div class="text-center my-4">or</div>
+          
+          <!-- Google Login -->
+          <button id="google-login-btn" class="w-full bg-red-600 text-white p-3 rounded-lg hover:bg-red-700 flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            </svg>
+            Continue with Google
+          </button>
+          
+          <button id="close-auth-modal" class="w-full mt-4 text-gray-600">Cancel</button>
+        </div>
+      </div>
+  <script>
+    // Firebase Configuration (Replace with your config)
+    const firebaseConfig = {
+      apiKey: "AIzaSyYOUR_API_KEY",
+      authDomain: "your-project.firebaseapp.com",
+      projectId: "your-project-id"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    // AI Tutor Functionality
+    document.getElementById('send-btn').addEventListener('click', async () => {
+      const question = document.getElementById('user-input').value;
+      if (!question) return;
+      
+      // Add user message to chat
+      const chatContainer = document.getElementById('chat-container');
+      chatContainer.innerHTML += `
+        <div class="chat-message bg-blue-100 p-3 rounded-lg ml-auto">
+          <p>${question}</p>
+        </div>
+      `;
+      
+      // Simulate AI response (Replace with real API call)
+      setTimeout(() => {
+        chatContainer.innerHTML += `
+          <div class="chat-message bg-green-100 p-3 rounded-lg">
+            <p>This is a simulated response. To connect real AI:</p>
+            <ol class="list-decimal pl-5 mt-2">
+              <li>Get an OpenAI API key</li>
+              <li>Uncomment the fetch code in the JavaScript</li>
+              <li>Handle responses</li>
+            </ol>
+          </div>
+        `;
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }, 1000);
+      
+      document.getElementById('user-input').value = '';
+    });
+
+    // Subjects Data
+    const subjects = [
+      {
+        id: "math",
+        title: "Mathematics",
+        icon: "🧮",
+        description: "Algebra, Geometry, Calculus"
+      },
+      {
+        id: "english",
+        title: "English",
+        icon: "📖",
+        description: "Grammar, Literature, Writing"
+      },
+      {
+        id: "science",
+        title: "Science",
+        icon: "🔬",
+        description: "Physics, Chemistry, Biology"
+      }
+    ];
+
+    // Render Subjects
+    const subjectsContainer = document.getElementById('subjects');
+    subjects.forEach(subject => {
+      subjectsContainer.innerHTML += `
+        <div class="bg-white p-6 rounded-lg shadow hover:shadow-md transition">
+          <div class="text-4xl mb-3">${subject.icon}</div>
+          <h3 class="text-xl font-bold mb-2">${subject.title}</h3>
+          <p class="text-gray-600 mb-4">${subject.description}</p>
+          <button class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800">
+            Start Learning
+          </button>
+        </div>
+      `;
+    });
+
+    // Auth Functions
+    document.getElementById('login-btn').addEventListener('click', () => {
+      document.getElementById('login-modal').classList.remove('hidden');
+    });
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+      document.getElementById('login-modal').classList.add('hidden');
+    });
+
+    document.getElementById('google-login').addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then(result => {
+          alert(`Welcome, ${result.user.displayName}!`);
+          document.getElementById('login-modal').classList.add('hidden');
+          document.getElementById('auth-status').innerHTML = `
+            <span>Hi, ${result.user.displayName}</span>
+            <button id="logout-btn" class="hover:underline">Logout</button>
+          `;
+        })
+        .catch(error => {
+          console.error("Login error:", error);
+          alert("Login failed. Please try again.");
+        });
+    });
+    // Auth UI Handling
+let currentAuthTab = 'login';
+
+document.getElementById('login-tab').addEventListener('click', () => {
+  switchAuthTab('login');
+});
+
+document.getElementById('signup-tab').addEventListener('click', () => {
+  switchAuthTab('signup');
+});
+
+function switchAuthTab(tab) {
+  currentAuthTab = tab;
+  document.getElementById('auth-modal-title').textContent = 
+    tab === 'login' ? 'Login' : 'Sign Up';
+  document.getElementById('login-form').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('signup-form').classList.toggle('hidden', tab === 'login');
+  
+  // Update tab styles
+  document.getElementById('login-tab').classList.toggle('border-green-700', tab === 'login');
+  document.getElementById('login-tab').classList.toggle('text-gray-500', tab !== 'login');
+  document.getElementById('signup-tab').classList.toggle('border-green-700', tab !== 'login');
+  document.getElementById('signup-tab').classList.toggle('text-gray-500', tab === 'login');
+}
+
+// Email Login
+document.getElementById('email-login-btn').addEventListener('click', async () => {
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  
+  try {
+    await emailLogin(email, password);
+    document.getElementById('auth-modal').classList.add('hidden');
+  } catch (error) {
+    alert(`Login failed: ${error.message}`);
+  }
+});
+
+// Email Signup
+document.getElementById('email-signup-btn').addEventListener('click', async () => {
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+  
+  try {
+    await emailSignup(email, password);
+    alert('Account created! Please check your email for verification.');
+    switchAuthTab('login');
+  } catch (error) {
+    alert(`Signup failed: ${error.message}`);
+  }
+});
+
+// Password Reset
+document.getElementById('forgot-password').addEventListener('click', async () => {
+  const email = document.getElementById('login-email').value;
+  if (!email) return alert('Please enter your email first');
+  
+  try {
+    await sendPasswordReset(email);
+    alert('Password reset email sent!');
+  } catch (error) {
+    alert(`Error: ${error.message}`);
+  }
+});
+  </script>
+  <!-- Load auth logic -->
+<script type="module" src="/src/auth.js"></script>
+</body>
+</html>
